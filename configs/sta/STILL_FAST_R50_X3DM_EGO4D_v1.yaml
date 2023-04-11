@@ -1,0 +1,84 @@
+NUM_DEVICES: 4
+TASK: 'sta' 
+SAVE_TOP_K: 1
+DATA:
+  STILL:
+    MIN_SIZE: [640, 672, 704, 736, 768, 800]
+    MAX_SIZE: 1333
+    FAST_TO_STILL_SIZE_RATIO: 0.32
+  FAST:
+    NUM_FRAMES: 16
+    SAMPLING_RATE: 1
+MODEL:
+  NAME: StillFast
+  NOUN_CLASSES: 128
+  VERB_CLASSES: 81
+  LOSS:
+    WEIGHTS:
+      NOUN: 1.0
+      VERB: 0.1
+      TTC: 0.5 
+  STILL:
+    PRETRAINED: True
+    REPLACE_HEAD: True
+    BACKBONE:
+      NAME: resnet50
+      PRETRAINED: True
+    BOX:
+      POOLER_SAMPLING_RATIO: 0
+  FAST:
+    BACKBONE:
+      NAME: x3d_m
+      PRETRAINED: True
+  STILLFAST:
+    ROI_HEADS:
+      VERSION: v2
+      V2_OPTIONS:
+        FUSION: concat_residual
+    FUSION:
+      FUSION_BLOCK: convolutional
+      CONVOLUTIONAL_FUSION_BLOCK:
+        POOLING: mean
+        CONV_BLOCK_ARCHITECTURE: simple_convolution
+        POST_UP_CONV_BLOCK: True
+        POST_SUM_CONV_BLOCK: True
+        GATING_BLOCK: 'None'
+      POST_PYRAMID_FUSION: False
+      PRE_PYRAMID_FUSION: True     
+      LATERAL_CONNECTIONS: False
+SOLVER:
+  BASE_LR: 0.001
+  WEIGHT_DECAY: 0.0001
+  MAX_EPOCH: 20
+  LR_POLICY: multistep_warmup
+  GAMMA: 0.1
+  WARMUP_STEPS: 2000
+  MILESTONES: [15, 30]
+  PRECISION: 16
+EGO4D_STA:
+  STILL_FRAMES_PATH: /path/to/the/EGO4D/v1/object_frames/folder/
+  FAST_LMDB_PATH: /path/to/the/EGO4D/v1/lmdb/folder/
+  ANNOTATION_DIR: /path/to/the/EGO4D/v1/annotations/ 
+  TRAIN_LISTS: [fho_sta_train.json] 
+  VAL_LISTS: [fho_sta_val.json]
+  TEST_LISTS: [fho_sta_test_unannotated.json]
+
+TRAIN:
+  BATCH_SIZE: 14
+  DATASET: "Ego4dShortTermAnticipationStillVideo"
+  AUGMENTATIONS:
+    RANDOM_HORIZONTAL_FLIP: True
+
+VAL:
+  DATASET: "Ego4dShortTermAnticipationStillVideo"
+  BATCH_SIZE: 16
+  GROUP_BATCH_SAMPLER: True
+
+TEST:
+  DATASET: "Ego4dShortTermAnticipationStillVideo"
+  BATCH_SIZE: 4
+
+DATA_LOADER:
+  NUM_WORKERS: 4
+
+  

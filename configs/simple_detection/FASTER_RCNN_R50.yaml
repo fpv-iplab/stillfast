@@ -1,0 +1,45 @@
+NUM_DEVICES: 4
+TASK: 'simple_detection'
+DATA:
+  STILL:
+    MIN_SIZE: [640, 672, 704, 736, 768, 800]
+    MAX_SIZE: 1333
+MODEL:
+  NAME: FasterRCNN
+  NOUN_CLASSES: 87
+  VERB_CLASSES: 74
+  STILL:
+    PRETRAINED: True
+    REPLACE_HEAD: True
+    BACKBONE:
+      NAME: resnet50
+      PRETRAINED: True
+    BOX:
+      POOLER_SAMPLING_RATIO: 0
+SOLVER:
+  BASE_LR: 0.001
+  WEIGHT_DECAY: 0.0001
+  MAX_EPOCH: 35
+  LR_POLICY: multistep_warmup
+  GAMMA: 0.1
+  WARMUP_STEPS: 1000
+  MILESTONES: [15, 30]
+
+TRAIN:
+  BATCH_SIZE: 12
+  DATASET: "Ego4dShortTermAnticipationStill"
+  AUGMENTATIONS:
+    RANDOM_HORIZONTAL_FLIP: True
+
+VAL:
+  DATASET: "Ego4dShortTermAnticipationStill"
+  BATCH_SIZE: 32
+
+TEST:
+  DATASET: "Ego4dShortTermAnticipationStill"
+  BATCH_SIZE: 16
+
+DATA_LOADER:
+  NUM_WORKERS: 8
+
+  

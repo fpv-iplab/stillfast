@@ -1,0 +1,5 @@
+[default]
+entity = yournickname
+project = yourprojectname
+base_url = https://api.wandb.ai
+
