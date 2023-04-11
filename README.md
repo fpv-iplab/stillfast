@@ -10,14 +10,12 @@ F. Ragusa, G. M. Farinella, A. Furnari. StillFast: An End-to-End Approach for Sh
 ## Citing StillFast Paper
 If you find our work useful in your research, please use the following BibTeX entry for citation.
 ```
-@misc{ragusa2023stillfast,
-title={StillFast: An End-to-End Approach for Short-Term Object Interaction Anticipation},
-author={Francesco Ragusa and Giovanni Maria Farinella and Antonino Furnari},
-year={2023},
-eprint={2304.03959},
-archivePrefix={arXiv},
-primaryClass={cs.CV}
-}
+ @InProceedings{ragusa2023stillfast,
+                    author={Francesco Ragusa and Giovanni Maria Farinella and Antonino Furnari},
+                    title={StillFast: An End-to-End Approach for Short-Term Object Interaction Anticipation}, 
+                    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops},
+                    year      = {2023}
+                }
 
 ```
 
